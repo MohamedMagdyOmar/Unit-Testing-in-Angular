@@ -29,4 +29,16 @@ describe("HeroComponent", () => {
 
         expect(fixture.componentInstance.hero.name).toEqual('SuperDude')
     })
+
+    it("should render the hero name in an anchor tag", () => {
+        fixture.componentInstance.hero = {id: 1, name:'SuperDude', strength:3}
+
+        // this is used to update the binding, binding is not getting run until change detection gets run
+        fixture.detectChanges();
+
+        // here we need to check that the anchor element in the html page is showing the heros name.
+        // nativeElement gives us access to DOM element.
+        // textContent -> takes the whole inner text and ignores the HTML, and appends all together
+        expect(fixture.nativeElement.querySelector('a').textContent).toContain("SuperDude")
+    })
 })
