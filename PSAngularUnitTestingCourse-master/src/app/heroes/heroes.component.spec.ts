@@ -34,6 +34,17 @@ describe("HeroesComponent", () => {
 
             expect(component.heroes.length).toBe(2)
         })
+
+        it("should call deleteHero", () => {
+            // if you did not put below line, he will gives error that "subscribe" is undefined
+            mockHeroService.deleteHero.and.returnValue(of(true));
+
+            component.heroes = Heroes;
+
+            component.delete(Heroes[2]);
+
+            expect(mockHeroService.deleteHero).toHaveBeenCalledWith(Heroes[2]);
+        })
     })
 
 })
