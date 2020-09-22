@@ -6,6 +6,7 @@ import { HeroService } from "../hero.service";
 import { of } from 'rxjs';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Hero } from '../hero';
+import { By } from "@angular/platform-browser";
 
 describe("HerosComponent", () => {
     let fixture: ComponentFixture<HeroesComponent>;
@@ -15,7 +16,7 @@ describe("HerosComponent", () => {
     // we are going to create another component that is similar to heroes component but it is much simpler. we added this simple component because we need to delete 
     // this line schemas: [NO_ERRORS_SCHEMA], becuase this line if we have a problem with the html for example we have <adiv> instead of <div> the test will neglect this issue.
     // so it hide errors in our template.
-    // so we create child mock component
+    // so we create child mock component to mock the child component app-hero
     @Component({
         selector: 'app-hero',
         template: '<div></div>',
@@ -65,6 +66,14 @@ describe("HerosComponent", () => {
         fixture.detectChanges();
 
         expect(fixture.componentInstance.heroes.length).toBe(3);
+    })
+
+    it("should create one li for each hero", () => {
+        mockHerosService.getHeroes.and.returnValue(of(Heroes));
+        fixture.detectChanges();
+
+
+        expect(fixture.debugElement.queryAll(By.css('li')).length).toBe(3);
     })
 
 })
