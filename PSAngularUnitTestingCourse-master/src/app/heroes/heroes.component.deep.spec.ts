@@ -36,15 +36,31 @@ describe("HerosComponent", () => {
 
         fixture = TestBed.createComponent(HeroesComponent);
 
-        mockHerosService.getHeroes.and.returnValue(of(Heroes));
-
-        // since we are calling change detection in parent component, so ngOnInit will be caled on parent and child comopnent
-        fixture.detectChanges();       
+           
     })
 
-    it("should set heroes correctly from the service", () => {
+    it("should render each hero as a HeroComponent", () => {
+        mockHerosService.getHeroes.and.returnValue(of(Heroes));
 
-        expect(true).toBe(true);
+        // since we are calling change detection in parent component, so ngOnInit will be caled on parent and child comopnent.
+        // run ngOnInit
+        fixture.detectChanges();   
+        // what we need to do is to look for HeroComponent that we have created, then we need to find child elememnt through a directive.
+        // below lines mean: go and find all elements or nodes in this template that have this directive on them, it will get list of all of the debug
+        // elements that are attached to a HeroComponent, so it will get list of all "app-hero" elements
+        const heroComponentsDEs = fixture.debugElement.queryAll(By.directive(HeroComponent))
+
+        // check that we have 3 app-hero
+        expect(heroComponentsDEs.length).toEqual(3);
+
+        expect(heroComponentsDEs[0].componentInstance.hero.name).toEqual("SpiderDude");
+        expect(heroComponentsDEs[1].componentInstance.hero.name).toEqual("Wonderful Woman");
+        expect(heroComponentsDEs[2].componentInstance.hero.name).toEqual("SuperDude");
+
+        for(let i = 0; i < heroComponentsDEs.length; i++)
+        {
+            expect(heroComponentsDEs[i].componentInstance.hero).toEqual(Heroes[i]);
+        }
     })
 
 })
