@@ -1,6 +1,7 @@
 import { TestBed, ComponentFixture } from "@angular/core/testing"
 import {HeroComponent} from "./hero.component"
 import { NO_ERRORS_SCHEMA } from "@angular/core";
+import { By } from "@angular/platform-browser";
 
 describe("HeroComponent", () => {
     let fixture: ComponentFixture<HeroComponent>;
@@ -36,6 +37,9 @@ describe("HeroComponent", () => {
         // this is used to update the binding, binding is not getting run until change detection gets run
         fixture.detectChanges();
 
+        // below 2 lines is similar to last line
+        let deA = fixture.debugElement.query(By.css('a'));
+        expect(deA.nativeElement.textContent).toContain('SuperDude');
         // here we need to check that the anchor element in the html page is showing the heros name.
         // nativeElement gives us access to DOM element.
         // textContent -> takes the whole inner text and ignores the HTML, and appends all together
