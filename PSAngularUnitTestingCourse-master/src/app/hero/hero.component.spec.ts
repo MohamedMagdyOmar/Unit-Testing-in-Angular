@@ -22,6 +22,7 @@ describe("HeroComponent", () => {
 
         // then we are going to create Test Component. it return fixture component which is a wrapper for a compoent that is 
         // used in testing
+        // note: when we create component using testbed, ngOnInit in this component will be called automatically
         fixture = TestBed.createComponent(HeroComponent);
     })
 
